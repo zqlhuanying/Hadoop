@@ -47,11 +47,17 @@ public class WordCount extends Configured implements Tool{
         try{
             Configuration conf = getConf();
             Job job = Job.getInstance(conf,"WordCount");
+            /** 不加下面这行代码，在伪分布式模式即mapreduce.framework.name='yarn'下会提示找不到Map类
+             *  但是在单机模式或mapreduce.framework.name='local'模式下却是可以运行
+             */
             job.setJarByClass(WordCount.class);
             job.setMapperClass(Map.class);
             job.setReducerClass(Reduce.class);
             job.setInputFormatClass(TextInputFormat.class);
             job.setOutputFormatClass(TextOutputFormat.class);
+            /** 不加下面这两行代码，可能会出现类型不匹配到错误
+             *
+             */
             job.setOutputKeyClass(Text.class);
             job.setOutputValueClass(IntWritable.class);
             TextInputFormat.addInputPath(job,new Path(args[0]));

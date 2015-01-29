@@ -1,3 +1,12 @@
+#过滤所有的文件夹.idea,target
 target/
-*.iml
 .idea/
+
+#过滤文件
+*.iml
+
+#过滤根目录下到所有文件夹，除了Com.Mvn.Hadoop
+/*
+!/Com.Mvn.Hadoop
+!.gitignore
+!README.md
